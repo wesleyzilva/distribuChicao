@@ -1,6 +1,6 @@
 Distribuchicão - Master Plan, Log & Guia TPM (V2)
 1. Visão Geral do Projeto & Dados Mestres
-Nome do Projeto: Distribuchicão
+Nome do Projeto: Distribuchicão....
 Foco de Mercado: E-commerce, logística leve, postagem de encomendas e comércio de embalagens/papelaria.
 Localização Física: Rua Astolpho Luiz do Prado, São Carlos, SP (CEP 13563-480).
 Dados Imobiliários / Fiscais:
