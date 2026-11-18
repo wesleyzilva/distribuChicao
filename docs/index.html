@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Visão geral do projeto DistribuChicão: um ponto de coleta e postagem de encomendas.">
+  <title>DistribuChicão | Projeto</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --gray: #3b3e42;
+      --orange: #e77e1b;
+      --paper: #f4f5f6;
+      --ink: #202124;
+      --muted: #565b61;
+      --line: #d8dce0;
+      --white: #fff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 17px/1.6 "Segoe UI", Arial, sans-serif;
+    }
+    header {
+      padding: 34px 20px;
+      color: var(--white);
+      background: var(--gray);
+      border-bottom: 7px solid var(--orange);
+    }
+    .wrap { width: min(940px, 100% - 32px); margin: 0 auto; }
+    h1 { margin: 0; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.1; }
+    h1 span { color: #ff9a37; }
+    header p { margin: 10px 0 0; color: #e2e4e6; }
+    main { padding: 26px 0 50px; }
+    section, .callout {
+      margin: 0 0 18px;
+      padding: 20px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    h2 { margin: 0 0 10px; color: var(--gray); font-size: 1.45rem; }
+    h3 { margin: 18px 0 6px; color: var(--gray); font-size: 1.1rem; }
+    p { margin: 8px 0; }
+    ul, ol { margin: 8px 0 8px 24px; padding: 0; }
+    li { margin: 6px 0; }
+    .callout { border-left: 6px solid var(--orange); background: #fff3e7; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+    .metric { padding: 14px; border-top: 4px solid var(--orange); background: #f7f7f7; border-radius: 8px; }
+    .metric strong { display: block; color: var(--gray); font-size: 1.25rem; }
+    .metric small { color: var(--muted); }
+    .muted { color: var(--muted); }
+    footer { padding: 0 0 28px; color: var(--muted); font-size: .9rem; }
+    @media print {
+      body { background: #fff; font-size: 14px; }
+      header { print-color-adjust: exact; }
+      section, .callout { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>DISTRIBU<span>CHICÃO</span></h1>
+      <p>Projeto de ponto de coleta e postagem de encomendas | São Carlos, SP</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section>
+      <h2>O que queremos fazer</h2>
+      <p>Preparar um pequeno ponto comercial para receber e organizar encomendas de vendedores e atender as operações de postagem e retirada que as plataformas autorizarem.</p>
+      <p><b>Primeiro foco:</b> conseguir aprovação das plataformas e validar a operação. Venda de embalagens e serviço de busca, embalagem e despacho são ideias para avaliar depois, não fazem parte do começo garantido.</p>
+    </section>
+
+    <div class="callout">
+      <b>Importante:</b> o projeto ainda depende da confirmação da Prefeitura para o uso do imóvel e da aprovação de cada plataforma. A meta de abrir ao público em abril de 2027 é uma previsão de planejamento, não uma data garantida.
+    </div>
+
+    <section>
+      <h2>Plano por etapas</h2>
+      <ol>
+        <li><b>Dezembro de 2026:</b> consultar a Prefeitura, comparar contadores, medir o espaço e pedir orçamentos.</li>
+        <li><b>Janeiro de 2027:</b> abrir a empresa com contador, se as validações permitirem, e confirmar licenças e documentos.</li>
+        <li><b>Fevereiro:</b> fazer adaptações leves, depois das confirmações, e preparar equipamentos e segurança.</li>
+        <li><b>Março:</b> solicitar credenciamento às redes e plataformas e concluir os ajustes exigidos.</li>
+        <li><b>A partir de abril:</b> iniciar somente se houver autorização, regularização e aprovação.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Estimativa inicial — precisa de cotações</h2>
+      <div class="grid">
+        <div class="metric"><strong>R$ 8,6 mil–21 mil</strong><small>Investimento estimado para preparar a operação; não é orçamento fechado.</small></div>
+        <div class="metric"><strong>R$ 700–950/mês</strong><small>Custos fixos estimados, sem salário do proprietário e sem eventual funcionário.</small></div>
+        <div class="metric"><strong>45–71 pacotes/dia</strong><small>Faixa aproximada de equilíbrio em cenários hipotéticos de comissão e imposto.</small></div>
+      </div>
+      <p class="muted">Os valores não incluem estoque de embalagens nem uma eventual pessoa contratada. A taxa de imposto e o pagamento por pacote ainda precisam ser confirmados com contador e plataformas. Não existe previsão pública confiável de volume diário para um ponto novo nesta região.</p>
+    </section>
+
+    <section>
+      <h2>O que precisa ser confirmado antes de investir mais</h2>
+      <ul>
+        <li>Se a Prefeitura permite atendimento comercial e guarda temporária de encomendas no imóvel.</li>
+        <li>Quais atividades, documentos fiscais e licenças o contador recomenda.</li>
+        <li>Se as plataformas estão credenciando pontos na região, quais são os requisitos e como funciona a remuneração.</li>
+        <li>Se haverá exigência de uma segunda pessoa e qual será o custo real.</li>
+        <li>Qual seguro cobre encomendas de terceiros enquanto estiverem sob guarda.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Decisão prudente</h2>
+      <p>Avançar por etapas, começar com uma operação pequena e medir o volume real. Não comprar estoque grande, fazer reforma irreversível ou contar com lucro antes das aprovações e das primeiras semanas de dados.</p>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <p>Material informativo e de planejamento. Valores e prazos são estimativas e precisam ser confirmados com contador, Prefeitura, Bombeiros, corretor e plataformas.</p>
+  </footer>
+</body>
+</html>
