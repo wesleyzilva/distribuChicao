@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DistribuChicão - Guia e Roadmap</title>
+<style>
+:root{
+  --cz:#4a4d52; --czesc:#2f3236; --lj:#f28c28; --ljesc:#c96d10; --ljcl:#fff1e0;
+  --fundo:#f3f4f5; --linha:#dfe2e5; --txt:#222; --mudo:#62666b; --ok:#2e7d32; --okcl:#e8f5e9; --ruim:#b3261e; --ruimcl:#fdecea;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI",Arial,Helvetica,sans-serif;font-size:18px;line-height:1.55;color:var(--txt);background:var(--fundo)}
+header{background:linear-gradient(120deg,var(--cz),var(--czesc));padding:20px 22px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:6px solid var(--lj)}
+.marca{font-size:34px;font-weight:900;letter-spacing:.5px;color:#fff;line-height:1.1}
+.marca span{color:var(--lj)}
+.sub{color:rgba(255,255,255,.8);font-size:14px;margin-top:4px}
+.selo{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:8px 14px;color:#fff;text-align:right}
+.selo small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;opacity:.75}
+.selo b{font-size:15px}
+.barra{display:flex;gap:8px;padding:10px 20px;background:#fff;border-bottom:1px solid var(--linha);flex-wrap:wrap}
+.barra button{background:var(--fundo);border:1px solid var(--linha);border-radius:6px;padding:7px 14px;font-size:14px;cursor:pointer}
+.barra button.prim{background:var(--lj);border-color:var(--lj);color:#fff;font-weight:700}
+.abas{display:flex;background:#fff;border-bottom:1px solid var(--linha);padding:0 12px;overflow-x:auto}
+.abas button{background:transparent;border:none;border-bottom:4px solid transparent;padding:12px 14px;font-size:15px;font-weight:700;color:var(--mudo);cursor:pointer;white-space:nowrap}
+.abas button.ativa{color:var(--ljesc);border-color:var(--lj)}
+main{max-width:1040px;margin:0 auto;padding:18px 16px 60px}
+.js .painel{display:none}
+.js .painel.ativo{display:block}
+h2{font-size:24px;color:var(--czesc);margin:6px 0 12px;padding-left:12px;border-left:6px solid var(--lj)}
+h3{font-size:19px;color:var(--czesc);margin:18px 0 6px}
+p{margin:8px 0}
+ul,ol{margin:8px 0 8px 24px}
+li{margin-bottom:6px}
+.cartao{background:#fff;border:1px solid var(--linha);border-radius:12px;padding:16px 18px;margin-bottom:16px}
+.grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--linha);border-radius:12px;padding:14px 16px;position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:var(--lj)}
+.kpi .n{font-size:24px;font-weight:800;color:var(--czesc);line-height:1.15;margin-top:4px}
+.kpi .r{font-size:13px;color:var(--mudo);text-transform:uppercase;letter-spacing:.4px}
+.kpi .d{font-size:13px;color:var(--mudo);margin-top:4px}
+.aviso{background:var(--ljcl);border-left:6px solid var(--lj);padding:12px 16px;border-radius:8px;margin:12px 0}
+.ok{background:var(--okcl);border-left:6px solid var(--ok);padding:12px 16px;border-radius:8px;margin:12px 0}
+.ruim{background:var(--ruimcl);border-left:6px solid var(--ruim);padding:12px 16px;border-radius:8px;margin:12px 0}
+.tabela{overflow-x:auto;margin:10px 0}
+table{width:100%;border-collapse:collapse;font-size:16px;background:#fff}
+th,td{border:1px solid var(--linha);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#e9ebed;color:var(--czesc)}
+td.num,th.num{text-align:right;white-space:nowrap}
+tr.total td{background:var(--ljcl);font-weight:800}
+tr.marco td{background:var(--czesc);color:#fff;font-weight:700}
+.etiqueta{display:inline-block;font-size:12px;font-weight:800;padding:2px 9px;border-radius:20px;background:var(--ljcl);color:var(--ljesc);text-transform:uppercase;letter-spacing:.3px}
+.fase{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:12px 0}
+.fase>div{background:#fff;border:1px solid var(--linha);border-top:6px solid var(--lj);border-radius:10px;padding:12px 14px}
+.fase h4{font-size:17px;color:var(--czesc);margin-bottom:4px}
+.fase .mes{font-size:13px;color:var(--ljesc);font-weight:800;text-transform:uppercase}
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:10px 0}
+.calc label{display:block;font-size:14px;color:var(--mudo);font-weight:700}
+.calc input{width:100%;font-size:18px;padding:8px;border:1px solid var(--linha);border-radius:6px;margin-top:3px}
+.botoes{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.botoes button{background:#fff;border:2px solid var(--lj);color:var(--ljesc);border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font-size:15px}
+.botoes button:hover{background:var(--lj);color:#fff}
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:12px}
+.res .kpi .n.pos{color:var(--ok)} .res .kpi .n.neg{color:var(--ruim)}
+svg{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--linha)}
+a{color:#0b57d0}
+footer{font-size:14px;color:var(--mudo);padding:0 4px 30px;max-width:1040px;margin:0 auto}
+@media print{
+  .barra,.abas{display:none}
+  body{background:#fff;font-size:15px}
+  .js .painel{display:block!important}
+  .cartao,.kpi,.fase>div{break-inside:avoid}
+  header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.className+=' js';</script>
+
+<header>
+  <div>
+    <div class="marca">DISTRIBU<span>CHICÃO</span></div>
+    <div class="sub">Ponto de coleta e postagem | Guia e roadmap para o Chico | Atualizado em 18/11/2026</div>
+  </div>
+  <div class="selo"><small>Fase atual</small><b>Preparação (dezembro/2026)</b></div>
+</header>
+
+<div class="barra">
+  <button class="prim" onclick="window.print()">Imprimir / Salvar em PDF</button>
+  <button onclick="location.reload()">Limpar</button>
+</div>
+
+<div class="abas" id="abas">
+  <button class="ativa" data-aba="resumo">Resumo</button>
+  <button data-aba="roadmap">Roadmap</button>
+  <button data-aba="dinheiro">Dinheiro</button>
+  <button data-aba="embalagens">Embalagens e impostos</button>
+  <button data-aba="local">Local e muro</button>
+  <button data-aba="concorrentes">Concorrentes</button>
+  <button data-aba="me">Por que ME</button>
+  <button data-aba="seguranca">Segurança e seguro</button>
+  <button data-aba="sites">Sites e dúvidas</button>
+</div>
+
+<main>
+
+<!-- RESUMO -->
+<section class="painel ativo" id="p-resumo">
+  <h2>Resumo para o Chico</h2>
+  <div class="grade">
+    <div class="kpi"><div class="r">Operação de verdade</div><div class="n">Abril/2027</div><div class="d">Meta. Depende da aprovação das plataformas.</div></div>
+    <div class="kpi"><div class="r">Investimento até lá</div><div class="n">R$ 8,6 mil a R$ 21 mil</div><div class="d">Estimativa da agência; não inclui estoque de embalagens.</div></div>
+    <div class="kpi"><div class="r">Custo por mês, já operando</div><div class="n">R$ 700 a R$ 950</div><div class="d">Sem salário para o Wesley no começo.</div></div>
+    <div class="kpi"><div class="r">Para empatar no mês</div><div class="n">45 a 60 pacotes por dia</div><div class="d">Com R$ 0,65 por pacote (suposição).</div></div>
+    <div class="kpi"><div class="r">Investimento recuperado</div><div class="n">7 meses a mais de 3 anos</div><div class="d">Com 150 a 60 pacotes por dia.</div></div>
+  </div>
+
+  <div class="cartao">
+    <h3>O que é o negócio</h3>
+    <p>Um ponto onde o vendedor deixa o pacote para a transportadora buscar, e onde o comprador retira a encomenda. Nada de vender produtos por enquanto: o foco é só ser ponto de coleta e agência oficial das plataformas.</p>
+    <p><b>Endereço:</b> Rua Astolpho Luiz do Prado, 165, Jardim São Carlos 5, São Carlos/SP.</p>
+  </div>
+
+  <div class="cartao">
+    <h3>O que já está decidido</h3>
+    <ul>
+      <li><b>Tipo de empresa:</b> ME (SLU) no Simples Nacional, com contador. Não será MEI (veja a aba "Por que ME").</li>
+      <li><b>Nome:</b> DistribuChicão.</li>
+      <li><b>Imóvel:</b> é do Chico e a autorização já está dada. O muro também é nosso e será usado como placa.</li>
+      <li><b>Cores:</b> cinza e laranja.</li>
+      <li><b>Foco:</b> operar como ponto de coleta e agência oficial. Vamos avaliar um pequeno conjunto de materiais básicos, mas ainda sem compra de estoque ou venda aprovada.</li>
+      <li><b>Equipe no começo:</b> o Wesley, sem salário no começo, porque ele não precisa dele agora.</li>
+      <li><b>Calendário:</b> preparar a casa em dezembro, abrir o CNPJ em janeiro, pintar o muro em fevereiro, começar a operar em abril.</li>
+    </ul>
+  </div>
+
+  <div class="aviso">
+    <b>A conta é uma simulação:</b> sem salário e considerando somente comissão por pacote, o custo do mês é estimado em <b>R$ 700 a R$ 950</b>. Para pagar isso, o cálculo usa uma provisão hipotética de imposto de 6% e uma comissão média de R$ 0,65. O contador precisa confirmar o imposto real; materiais de embalagem e serviço de retirada não estão incluídos.
+  </div>
+
+  <div class="ruim">
+    <b>O que ainda falta confirmar:</b> se a Prefeitura permite comércio e guarda de pacotes neste endereço (veja a aba "Local e muro") e se as plataformas vão aprovar o ponto.
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="painel" id="p-roadmap">
+  <h2>Roadmap: de dezembro de 2026 até recuperar o investimento</h2>
+  <p>Valores em reais, no formato <b>mínimo / confortável</b>. São estimativas, não orçamentos.</p>
+
+  <div class="fase">
+    <div><div class="mes">Dezembro/2026</div><h4>Preparar</h4><p>Confirmar o uso do imóvel. Pedir 3 orçamentos de contador. Começar a deixar a casa mais comercial.</p></div>
+    <div><div class="mes">Janeiro/2027</div><h4>Abrir a empresa</h4><p>CNPJ, inscrição estadual e municipal. Terminar a reforma. Comprar os equipamentos.</p></div>
+    <div><div class="mes">Fevereiro/2027</div><h4>Regularizar e pintar</h4><p>Alvará e Bombeiros. Pintar o muro com o nome. Câmeras e internet.</p></div>
+    <div><div class="mes">Março/2027</div><h4>Pedir aprovação</h4>    <p>Candidatura nas plataformas. Visita e fotos para aprovação. Ajustes pedidos por elas.</p></div>
+        <div><div class="mes">Abril/2027</div><h4>Operar</h4><p>Primeiro pacote bipado, se aprovado.</p></div>
+  </div>
+
+  <div class="tabela">
+  <table>
+    <thead><tr><th>Período</th><th>O que fazer</th><th>Quem</th><th class="num">Custo (mín / conf)</th></tr></thead>
+    <tbody>
+      <tr><td><b>Dez/2026</b></td><td>Confirmar uso do solo (aba "Local e muro"). Pedir 3 orçamentos de contador e comparar com o do Bacchini. Tirar fotos "antes" e medidas. Definir a arte do muro. Cotar seguro. Começar a reforma leve: porta ou portão comercial, balcão, prateleiras, pintura interna.</td><td>Wesley, Chico</td><td class="num">R$ 2.000 / R$ 6.000</td></tr>
+      <tr><td><b>Jan/2027</b></td><td>Abrir o CNPJ como ME (SLU): contrato social, Junta Comercial, Receita, Posto Fiscal e Prefeitura. Certificado digital e conta PJ. Terminar a reforma. Comprar leitor de código de barras, impressora térmica, celular Android e câmeras.</td><td>Contador, Wesley</td><td class="num">R$ 3.600 / R$ 7.280</td></tr>
+      <tr><td><b>Fev/2027</b></td><td>Alvará de funcionamento e Bombeiros (extintores, luz de emergência, placas). Pintar o muro e fazer o letreiro. Instalar câmeras e internet. Tirar fotos "depois".</td><td>Contador, pintor</td><td class="num">R$ 1.750 / R$ 5.100</td></tr>
+      <tr><td><b>Mar/2027</b></td><td>Pedir credenciamento na Shopee, Mercado Livre, Amazon e Magalu. Visita e fotos para aprovação. Fazer os ajustes que as plataformas pedirem. Treinar o uso dos aplicativos.</td><td>Wesley</td><td class="num">R$ 700 / R$ 950</td></tr>
+      <tr><td>Reserva</td><td>Reserva de 10% para imprevistos.</td><td>-</td><td class="num">R$ 600 / R$ 1.650</td></tr>
+      <tr class="total"><td colspan="3">Total investido até a operação</td>      <td class="num">R$ 8.650 / R$ 20.980</td></tr>
+            <tr class="marco"><td><b>Abr/2027</b></td><td colspan="2">OPERAÇÃO DE VERDADE (meta 01/04/2027). Sem salário para o Wesley no começo.</td><td class="num">Custo mensal: R$ 700 / R$ 950</td></tr>
+            <tr><td><b>Abr a Jun/2027</b></td><td colspan="2">A operação cobre os custos do mês: em abril com cerca de 150 pacotes por dia, em maio com cerca de 100, em junho com cerca de 60.</td><td class="num">Mês 1 a mês 3</td></tr>
+            <tr class="marco"><td><b>Out/2027 a 2030</b></td><td colspan="2">Recuperar o investimento: com 150 pacotes por dia, em out/2027 (mínimo) ou ago/2028 (confortável); com 100, em mar/2028 ou mar/2030; com 60, em mai/2030 (mínimo) ou mais de 5 anos (confortável).</td><td class="num">7º a 38º mês</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="aviso">
+    <b>O que pode atrasar:</b> a aprovação das plataformas depende da região e pode levar semanas. Enquanto isso o ponto não recebe pacotes e só gera custo fixo (R$ 700 a R$ 950 por mês). Se o Wesley decidir receber um salário no futuro, some R$ 1.621 por mês (1 salário mínimo) e o empate sobe para cerca de 150 a 160 pacotes por dia.
+  </div>
+</section>
+
+<!-- DINHEIRO -->
+<section class="painel" id="p-dinheiro">
+  <h2>Investimento, custos e retorno</h2>
+
+  <h3>1. Investimento até começar a operar</h3>
+  <div class="tabela">
+  <table>
+    <thead><tr><th>Item</th><th class="num">Mínimo</th><th class="num">Confortável</th><th>Observação</th></tr></thead>
+    <tbody>
+      <tr><td>Abertura da empresa</td><td class="num">R$ 900</td><td class="num">R$ 2.130</td><td>Confortável é a proposta do Bacchini (taxas incluídas). Mínimo é contador online com abertura sem honorário; taxas por conta (a confirmar).</td></tr>
+      <tr><td>Alvará da Prefeitura</td><td class="num">R$ 150</td><td class="num">R$ 450</td><td>Varia com a área e as atividades.</td></tr>
+      <tr><td>Bombeiros (taxa, extintores, luz, placas)</td><td class="num">R$ 300</td><td class="num">R$ 1.200</td><td>Segurança contra incêndio.</td></tr>
+      <tr><td>Reforma leve (balcão, prateleiras, porta, pintura interna)</td><td class="num">R$ 2.000</td><td class="num">R$ 6.000</td><td>Estimativa. Cotar 3 orçamentos.</td></tr>
+      <tr><td>Muro e letreiro (cinza e laranja, com o nome)</td><td class="num">R$ 600</td><td class="num">R$ 2.500</td><td>Mínimo é pintura. Confortável inclui letreiro.</td></tr>
+      <tr><td>Equipamentos (leitor, impressora térmica, celular, câmeras)</td><td class="num">R$ 2.000</td><td class="num">R$ 4.200</td><td>Mínimo supõe que o Wesley já tem computador.</td></tr>
+      <tr><td>Custos fixos de jan a mar (contador, internet, sistemas, seguro)</td><td class="num">R$ 2.100</td><td class="num">R$ 2.850</td><td>Ainda sem faturamento.</td></tr>
+      <tr><td>Reserva para imprevistos</td><td class="num">R$ 600</td><td class="num">R$ 1.650</td><td>Cerca de 10%.</td></tr>
+      <tr class="total"><td>TOTAL</td><td class="num">R$ 8.650</td><td class="num">R$ 20.980</td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>A reforma da vitrine de vidro com cobertura, como na imagem de referência, não está na conta. Fica para uma segunda fase, com orçamento próprio. Também não estão incluídos materiais de embalagem ou capital de giro para estoque.</p>
+
+  <h3>2. Custo por mês, já operando</h3>
+  <div class="tabela">
+  <table>
+    <thead><tr><th>Item</th><th class="num">Mínimo</th><th class="num">Confortável</th></tr></thead>
+    <tbody>
+      <tr><td>Contador (Bacchini: R$ 450, mínimo de 3 meses; online: cerca de R$ 300)</td><td class="num">R$ 300</td><td class="num">R$ 450</td></tr>
+      <tr><td>Internet, energia e água a mais</td><td class="num">R$ 200</td><td class="num">R$ 250</td></tr>
+      <tr><td>Sistema, domínio, WhatsApp Business</td><td class="num">R$ 100</td><td class="num">R$ 150</td></tr>
+      <tr><td>Seguro (reserva até o preço real)</td><td class="num">R$ 100</td><td class="num">R$ 100</td></tr>
+      <tr class="total"><td>TOTAL FIXO</td><td class="num">R$ 700</td><td class="num">R$ 950</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Sem salário para o Wesley no começo e sem aluguel, porque o imóvel é do Chico. Se a empresa pagar aluguel ou salário, some esse valor. A simulação usa 6% apenas como provisão; não é a alíquota confirmada da empresa. O contador deve classificar a comissão e calcular o Simples conforme a atividade e a receita acumulada.</p>
+
+  <h3>3. Quatro cenários de movimento (hipóteses para o Wesley ajustar)</h3>
+    <p>Premissas: 26 dias de trabalho por mês, R$ 0,65 por pacote em média e provisão hipotética de 6% (a confirmar com o contador). A comissão é a única receita; materiais e retirada não entram na conta. O primeiro mês é abril/2027 e o movimento cresce em 3 meses (40%, 70%, 100%).</p>
+  <div class="tabela">
+  <table>
+    <thead><tr><th>Cenário</th><th class="num">Pacotes por dia</th><th class="num">Comissão por mês (bruta)</th><th class="num">Resultado por mês (mín / conf)</th><th>Operação cobre os custos</th><th>Investimento recuperado (mín / conf)</th></tr></thead>
+    <tbody>
+      <tr><td>Pouco movimento</td><td class="num">40</td><td class="num">R$ 676</td><td class="num">-R$ 65 / -R$ 315</td><td>Não cobre</td><td>Não recupera</td></tr>
+      <tr><td>Quase no empate</td><td class="num">60</td><td class="num">R$ 1.014</td><td class="num">+R$ 253 / +R$ 3</td><td>Jun/2027</td><td>Mai/2030 (38º mês) / mais de 5 anos</td></tr>
+      <tr><td><b>Movimento médio</b></td><td class="num">100</td><td class="num">R$ 1.690</td><td class="num">+R$ 889 / +R$ 639</td><td>Mai/2027</td><td>Mar/2028 (12º mês) / mar/2030 (36º mês)</td></tr>
+      <tr><td>Movimento alto</td><td class="num">150</td><td class="num">R$ 2.535</td><td class="num">+R$ 1.683 / +R$ 1.433</td><td>Abr/2027</td><td>Out/2027 (7º mês) / ago/2028 (17º mês)</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="ruim">
+    <b>Atenção:</b> o número de pacotes por dia e o ganho por pacote são <b>suposições</b>, não dados de mercado. A Shopee paga R$ 0,70 nos primeiros 500 pacotes do mês e a tarifa cai com o volume (média de cerca de R$ 0,55 perto de 2.600 pacotes por mês numa só plataforma). Cada plataforma tem a sua tabela. Com essa tarifa e a provisão hipotética de 6%, o empate estimado sobe para 52 a 71 pacotes por dia. Quem define o volume é a plataforma e a região.
+  </div>
+
+  <h3>4. Calculadora: mude os números e veja</h3>
+  <div class="botoes">
+    <button type="button" data-cen="p40">40 pacotes por dia</button>
+    <button type="button" data-cen="p60">60 pacotes por dia</button>
+    <button type="button" data-cen="p100">100 pacotes por dia</button>
+    <button type="button" data-cen="p150">150 pacotes por dia</button>
+    <button type="button" data-inv="min">Investimento mínimo</button>
+    <button type="button" data-inv="conf">Investimento confortável</button>
+  </div>
+  <div class="calc">
+    <div><label for="c-pac">Pacotes por dia</label><input id="c-pac" type="number" min="0" step="5" value="100"></div>
+    <div><label for="c-tar">Ganho médio por pacote (R$)</label><input id="c-tar" type="number" min="0" step="0.05" value="0.65"></div>
+    <div><label for="c-imp">Imposto estimado (%) — provisório</label><input id="c-imp" type="number" min="0" max="100" step="0.5" value="6"></div>
+    <div><label for="c-fix">Custo fixo por mês (R$)</label><input id="c-fix" type="number" min="0" step="50" value="700"></div>
+    <div><label for="c-inv">Investimento total (R$)</label><input id="c-inv" type="number" min="0" step="500" value="8650"></div>
+  </div>
+  <p>Os 6% são apenas uma hipótese inicial. Depois que o contador confirmar a alíquota efetiva, você pode trocar esse número para testar o cenário; a calculadora não substitui o PGDAS-D.</p>
+  <div class="res">
+    <div class="kpi"><div class="r">Resultado por mês, já estável</div><div class="n" id="r-res">-</div>    <div class="d">Após provisão hipotética de 6% e custos fixos; não é apuração fiscal.</div></div>
+        <div class="kpi"><div class="r">Comissão por ano</div><div class="n" id="r-fat">-</div><div class="d">Bruta; antes de imposto e despesas variáveis.</div></div>
+    <div class="kpi"><div class="r">Operação cobre os custos em</div><div class="n" id="r-eq">-</div><div class="d">Primeiro mês no azul.</div></div>
+    <div class="kpi"><div class="r">Investimento recuperado em</div><div class="n" id="r-ret">-</div><div class="d">A partir de abril/2027 como mês 1.</div></div>
+    <div class="kpi"><div class="r">Pacotes por dia para empatar</div><div class="n" id="r-pac">-</div><div class="d">Para o mês fechar no zero.</div></div>
+  </div>
+</section>
+
+<!-- EMBALAGENS E IMPOSTOS -->
+<section class="painel" id="p-embalagens">
+  <h2>Embalagens e impostos: o que estudar</h2>
+  <div class="ok"><b>Plano de agora:</b> primeiro aprovar e operar o ponto de coleta. Não comprar estoque grande. Um kit pequeno de caixas, envelopes, fita e proteção só será avaliado se as regras das plataformas permitirem e houver procura.</div>
+
+  <h3>Três ideias diferentes — não misturar</h3>
+  <div class="tabela">
+    <table>
+      <thead><tr><th>Possibilidade</th><th>O que significa</th><th>Próximo passo</th></tr></thead>
+      <tbody>
+        <tr><td><b>Materiais básicos</b></td><td>Vender poucas embalagens adequadas para postagem, sem virar uma loja ampla. O estoque exige dinheiro e pode encalhar.</td><td>Comparar o mesmo tamanho e tipo com Correios e lojas locais; cotar fornecedores e testar pouca quantidade. O orçamento atual não inclui estoque.</td></tr>
+        <tr><td><b>Embalagem como serviço</b></td><td>O cliente paga para o DistribuChicão preparar o pacote. É diferente de vender a caixa.</td><td>Confirmar se a plataforma permite e pedir ao contador a classificação, nota fiscal e imposto dessa cobrança.</td></tr>
+        <tr><td><b>Buscar, embalar e despachar</b></td><td>Uma ideia futura de retirada no endereço do cliente e entrega ao transportador.</td><td>Estudar depois da agência: autorização da plataforma, quem responde pelo pacote, veículo/entregador, seguro e impostos de transporte.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><b>Preço interessante:</b> comparar embalagens equivalentes por tamanho, resistência e quantidade. Somar compra, imposto, perdas e reposição antes de decidir o preço. Ainda não temos preços confirmados para prometer que será mais barato que os Correios.</p>
+
+  <h3>Impostos em linguagem simples</h3>
+  <ul>
+    <li><b>Comissão do ponto:</b> o contador precisa ver o contrato da plataforma, definir CNAE e confirmar se a receita exige NFS-e e como entra no Simples. Não presumir que toda comissão seja tributada da mesma forma.</li>
+    <li><b>Venda de embalagem:</b> normalmente é venda de mercadoria; pode envolver Inscrição Estadual, NF-e e ICMS. O contador deve confirmar produto, código fiscal e eventuais regras especiais.</li>
+    <li><b>Cobrar para embalar ou buscar:</b> o tratamento depende do serviço e do contrato. Guarda, embalagem e transporte podem ter regras diferentes; não assumir automaticamente que tudo paga 6% ou usa a mesma nota.</li>
+    <li><b>Alíquotas do Simples:</b> os 4% (comércio) e 6% (alguns serviços) são referências nominais de tabelas, não garantia do percentual efetivo desta empresa. A conta considera atividade, faturamento acumulado e regras vigentes.</li>
+    <li><b>Sem salário:</b> não significa automaticamente que não exista pró-labore ou INSS. Perguntar ao contador antes de abrir.</li>
+  </ul>
+  <div class="aviso">
+    <b>Antes de vender ou buscar:</b> pedir ao contador, por escrito, um quadro com CNAE, nota fiscal, imposto e obrigações para cada receita. Perguntar também às plataformas se o contrato permite vender embalagens ou coletar fora do endereço cadastrado.
+  </div>
+  <p>Referências oficiais para conferir regras vigentes: <a href="https://www8.receita.fazenda.gov.br/SimplesNacional/" target="_blank" rel="noopener">Simples Nacional</a>, <a href="https://www.gov.br/nfse/pt-br" target="_blank" rel="noopener">NFS-e Nacional</a>, <a href="https://www.gov.br/receitafederal/pt-br" target="_blank" rel="noopener">Receita Federal</a> e <a href="https://www.correios.com.br/" target="_blank" rel="noopener">Correios</a>.</p>
+</section>
+
+<!-- LOCAL -->
+<section class="painel" id="p-local">
+  <h2>Local, muro e marca</h2>
+
+  <h3>Como o imóvel está hoje (fotos "antes")</h3>
+  <ul>
+    <li>Casa de esquina, com número 165 no pilar do portão, portão de grade e janelas com grade.</li>
+    <li>Muro azul de esquina com um anúncio de outro negócio. Esse anúncio precisa sair para entrar o nosso.</li>
+    <li>Canteiro com mato e árvores na frente, e um outdoor logo ao lado.</li>
+    <li>Foto antiga (2011, Street View): muro cinza com o número pintado e o mesmo portão de grade.</li>
+    <li>Hoje a frente tem cara de casa. A meta é virar cara de loja.</li>
+  </ul>
+
+  <h3>Ideia para o muro (cinza e laranja)</h3>
+  <svg viewBox="0 0 600 240" role="img" aria-label="Ideia de pintura do muro com o nome DistribuChicão">
+    <rect width="600" height="240" fill="#e7e9ec"/>
+    <rect x="20" y="24" width="560" height="170" fill="#4a4d52"/>
+    <rect x="20" y="148" width="560" height="30" fill="#f28c28"/>
+    <text x="300" y="92" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="50" fill="#ffffff">DISTRIBU<tspan fill="#f28c28">CHICÃO</tspan></text>
+    <text x="300" y="126" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="20" fill="#ffffff">PONTO DE COLETA E POSTAGEM</text>
+    <text x="300" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="18" fill="#2f3236">WhatsApp: (16) 00000-0000</text>
+    <rect x="0" y="194" width="600" height="46" fill="#cfd2d6"/>
+  </svg>
+  <p>Desenho só para dar ideia. A arte final e o telefone serão definidos com o pintor.</p>
+
+  <h3>O que pintar e escrever no muro</h3>
+  <ul>
+    <li>Nome grande e legível de longe, para quem passa de carro. A esquina ajuda: aparece de dois lados.</li>
+    <li>Palavras claras: <b>Ponto de coleta, Postagem e Retirada de compras</b>.</li>
+    <li>Número do WhatsApp Business e horário de funcionamento.</li>
+    <li>Logos de Shopee, Mercado Livre, Amazon e Magalu <b>só depois de aprovados</b>, e só com autorização de cada uma (cada plataforma tem regras sobre uso da marca).</li>
+    <li>Antes de pintar, perguntar à Prefeitura se placa e pintura de muro com nome precisam de licença. Em São Paulo capital a placa de loja exige licença. A regra de São Carlos eu não encontrei.</li>
+  </ul>
+
+  <h3>Como confirmar se a Prefeitura permite funcionar neste endereço</h3>
+  <p>Esse é o ponto mais importante antes de gastar com a reforma. São 3 caminhos, do mais fácil ao mais completo:</p>
+  <ol>
+    <li><b>Consulta de viabilidade pelo contador.</b> O contador informa o endereço e as atividades (CNAEs) no sistema de abertura de empresas, e a Prefeitura responde se o uso é permitido. É a forma mais rápida e já faz parte do trabalho dele. Peça isso logo.</li>
+    <li><b>Certidão de uso e ocupação do solo.</b> Documento oficial que diz o que é permitido naquele terreno. O Wesley pode pedir direto na Prefeitura (Secretaria de Habitação e Desenvolvimento Urbano), levando o IPTU do imóvel. O site de consulta online da Prefeitura estava fora do ar quando tentei, então vale ir ao balcão ou ligar.</li>
+    <li><b>Plano Diretor de São Carlos (Lei 18.053/2016).</b> É a lei que define as zonas da cidade. Estou estudando em que zona o endereço está e o que ela permite. Isso vem numa próxima etapa.</li>
+  </ol>
+  <div class="aviso">
+    <b>Documentos úteis:</b> IPTU 10302001001 e código do imóvel 00048379. Como o imóvel está no nome do Chico, o contador pode pedir uma autorização por escrito (termo de cessão ou comodato) para a empresa usar o endereço. O Chico já autorizou, então basta formalizar.
+  </div>
+  <div class="ruim">
+    <b>Importante:</b> sem a resposta da Prefeitura, nada de reforma grande nem de pintura final. A resposta tem de vir em dezembro.
+  </div>
+
+  <h3>O que a casa precisa ter para parecer e funcionar como ponto</h3>
+  <ul>
+    <li><b>Entrada comercial</b> direto da calçada, sem degrau. Porta de vidro ou portão aberto no horário.</li>
+    <li><b>Balcão</b> de atendimento separado da parte da família.</li>
+    <li><b>Corredor livre de 1,20 m</b> até a saída. Nada de caixas ou prateleiras no caminho.</li>
+    <li><b>Área de pacotes</b> com pelo menos 4 m² livres (exigência do Mercado Livre), com prateleiras de aço presas na parede.</li>
+    <li><b>Três divisões</b> para a Shopee: postagem, retirada e devolução. O pacote mais antigo sai primeiro.</li>
+    <li><b>Equipamentos:</b> computador, leitor de código de barras, impressora térmica com Bluetooth, celular Android, internet e câmeras (gravando 15 dias).</li>
+    <li><b>Bombeiros:</b> extintores, luz de emergência e placas de saída.</li>
+    <li><b>Duas pessoas</b> na loja em horário comercial, pedido do Mercado Livre. O Wesley sozinho pode não bastar, então planejar um ajudante (que a conta acima ainda não inclui).</li>
+  </ul>
+  <p>Esquema simples: entrada, balcão (computador, leitor, impressora), área de pacotes por tipo e data, corredor livre, saída sinalizada. Parte da casa fechada ao público.</p>
+</section>
+
+<!-- CONCORRENTES -->
+<section class="painel" id="p-concorrentes">
+  <h2>Concorrentes em São Carlos</h2>
+
+  <h3>Outros pontos de postagem e coleta</h3>
+  <div class="ruim">
+    <b>Não consegui listar todos:</b> os mapas oficiais de pontos da Shopee e do Mercado Livre só funcionam no navegador. Uma lista pública (Rally de Vendas) com 2.239 agências do Mercado Livre não traz São Carlos, mas ela é parcial e não prova que não existam pontos aqui.
+  </div>
+  <p><b>Já apareceu um ponto:</b> uma unidade Jadlog da rede Pegaki, na Av. Getúlio Vargas, 2875, Recreio São Judas Tadeu (CEP 13571-271), aberta até as 18h. Ela consta na página de ajuda do Melhor Envio e é só uma pista: confirmar o endereço e a distância até o nosso.</p>
+  <h3>Como o Wesley confere em 10 minutos</h3>
+  <ol>
+    <li>Abrir o mapa de agências da Shopee: <a href="https://logistics.shopee.com.br/emap/9100" target="_blank" rel="noopener">logistics.shopee.com.br/emap/9100</a>, digitar o CEP 13563-480 e contar os pontos num raio de 1 a 2 km.</li>
+    <li>Abrir o mapa do Mercado Livre: <a href="https://envios.mercadolivre.com.br/shipping/agencies-map" target="_blank" rel="noopener">envios.mercadolivre.com.br/shipping/agencies-map</a> e fazer o mesmo.</li>
+    <li>Ver também os pontos Pegaki (<a href="https://locationsmap.pegaki.com.br" target="_blank" rel="noopener">locationsmap.pegaki.com.br</a>) e os pontos de Correios, Jadlog e Loggi por CEP (<a href="https://cepcerto.com/pontos-coleta" target="_blank" rel="noopener">cepcerto.com/pontos-coleta</a>). Para a Amazon, o ponto precisa ficar a pelo menos 1 km de outro.</li>
+    <li>Anotar nome, endereço, horário e se há fila. Tirar print de cada mapa.</li>
+  </ol>
+  <div class="aviso">
+    <b>Como ganhar:</b> horário estendido, esquina fácil de achar, atendimento rápido, balcão organizado, câmeras e zero extravio. Quem tem desempenho alto ainda pode receber bonificação da Shopee.
+  </div>
+</section>
+
+<!-- ME -->
+<section class="painel" id="p-me">
+  <h2>Por que ME e não MEI</h2>
+  <div class="ok"><b>Decisão: ME (SLU) no Simples Nacional, com contador.</b> O MEI fica fora do plano.</div>
+  <p>As restrições abaixo são as que mais pesam para quem <b>opera um ponto de postagem e coleta</b>:</p>
+
+  <div class="tabela">
+  <table>
+    <thead><tr><th>Restrição do MEI</th><th>O que isso significa para nós</th></tr></thead>
+    <tbody>
+      <tr><td><b>Limite de faturamento: R$ 81 mil por ano (cerca de R$ 6.750 por mês)</b></td><td>No começo não é o problema: só com comissões, 60 a 150 pacotes por dia rendem de R$ 12 mil a R$ 30 mil por ano. Passa a ser se o negócio crescer ou ganhar outras receitas.</td></tr>
+      <tr><td><b>Só pode ter as atividades da lista do MEI</b></td><td>A Shopee pede, na página de cadastro da agência, CNAE de armazenagem (5211-7/99, 5211-7/01 ou 5211-7/02). A FAQ dela é mais flexível, mas não dá para depender de brecha. Na ME escolhemos os CNAEs certos.</td></tr>
+      <tr><td><b>Nota fiscal do serviço</b></td><td>A Shopee paga mediante nota fiscal de serviço de armazenagem. A ME já nasce pronta para emitir.</td></tr>
+      <tr><td><b>Só 1 funcionário</b></td><td>O Mercado Livre pede duas pessoas na loja. O dono mais um ajudante cabem, mas sem espaço para crescer. Na ME, sim.</td></tr>
+      <tr><td><b>Não aceita sócio</b></td><td>Se um dia entrar um sócio (ou o Chico), só a ME comporta.</td></tr>
+      <tr><td><b>Algumas plataformas barram ou evitam MEI</b></td><td>KaBuM! não aceita MEI como vendedor. A Amazon costuma excluir MEI nos pontos (informação de contadores, ainda sem confirmação oficial).</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>O que a ME custa a mais</h3>
+  <ul>
+    <li><b>Contador é obrigatório:</b> cerca de R$ 300 a R$ 450 por mês (R$ 3.600 a R$ 5.400 por ano). Com faturamento pequeno no começo, é o maior custo do negócio.</li>
+        <li><b>Imposto:</b> a partir de 6% sobre as comissões, no lugar da guia fixa de cerca de R$ 80 por mês do MEI.</li>
+    <li><b>Abertura:</b> R$ 900 a R$ 2.130 (o MEI abre de graça).</li>
+  </ul>
+  <div class="aviso">
+    <b>Em resumo:</b> por ano, a ME custa mais que o MEI, e com faturamento pequeno isso pesa. A escolha vem do objetivo: ser agência oficial aceita pelas plataformas, com o CNAE de armazenagem, nota fiscal de serviço e equipe para crescer, sem precisar trocar de empresa depois.
+  </div>
+</section>
+
+<!-- SEGURANÇA -->
+<section class="painel" id="p-seguranca">
+  <h2>Segurança e seguro</h2>
+
+  <h3>Segurança exigida pelas plataformas</h3>
+  <ul>
+    <li><b>Câmeras</b> gravando o balcão e os pacotes, com imagens guardadas por 15 dias (Shopee).</li>
+    <li><b>Bipar cada pacote</b> ao receber e recusar pacote avariado.</li>
+    <li><b>Entregar ao comprador só com o código (PIN)</b>.</li>
+    <li><b>Guardar os pacotes só no endereço cadastrado</b>.</li>
+    <li><b>Proteger os dados</b> das etiquetas (nome e endereço dos clientes). Não deixar à mostra nem jogar no lixo comum.</li>
+    <li><b>Visitas de auditoria</b> da Shopee podem acontecer.</li>
+  </ul>
+
+  <h3>Segurança recomendada</h3>
+  <ul>
+    <li>Extintores, luz de emergência, placas de saída e caminho livre (Bombeiros).</li>
+    <li>Portão e porta com fechadura reforçada, iluminação externa e alarme.</li>
+    <li>Área de pacotes fechada ao público, com controle de quem entra.</li>
+    <li>Armário com chave para pacotes de maior valor.</li>
+  </ul>
+
+  <h3>Por que fazer seguro</h3>
+  <div class="ruim">
+    Pelos termos da Shopee, se um pacote for perdido, danificado ou furtado no ponto, o ponto <b>reembolsa o valor declarado</b> do pacote. Um furto pode custar mais que meses de comissão. A Shopee não paga a apólice nem a franquia.
+  </div>
+  <ol>
+    <li><b>Empresarial (patrimonial):</b> incêndio, roubo e danos elétricos em equipamentos e estoque.</li>
+    <li><b>Responsabilidade civil:</b> se alguém se machucar no ponto.</li>
+    <li><b>Mercadorias de terceiros em guarda:</b> cobre pacotes perdidos, roubados ou danificados enquanto estão com a gente.</li>
+  </ol>
+  <div class="aviso">
+    <b>Perguntar ao corretor (registrado na SUSEP):</b> qual o limite por pacote e por evento? Qual a franquia? O que fica de fora (por exemplo, furto sem arrombamento)? A apólice cobre mercadoria de terceiros?
+  </div>
+</section>
+
+<!-- SITES -->
+<section class="painel" id="p-sites">
+  <h2>Sites oficiais e dúvidas</h2>
+
+  <h3>Sites para acompanhar</h3>
+  <ul>
+    <li><a href="https://www.facilitasp.sp.gov.br" target="_blank" rel="noopener">Facilita SP</a> (abertura de empresa em SP)</li>
+    <li><a href="https://www.institucional.jucesp.sp.gov.br/jucesp" target="_blank" rel="noopener">JUCESP</a> (Junta Comercial de SP)</li>
+    <li><a href="https://www.gov.br/receitafederal/pt-br" target="_blank" rel="noopener">Receita Federal</a> (CNPJ e Simples Nacional)</li>
+    <li><a href="https://www.gov.br/nfse/pt-br" target="_blank" rel="noopener">NFS-e Nacional</a> (nota fiscal de serviço)</li>
+    <li><a href="https://www.saocarlos.sp.gov.br" target="_blank" rel="noopener">Prefeitura de São Carlos</a> (alvará, uso do solo, Plano Diretor)</li>
+    <li><a href="https://spx.com.br/br/shopee-agency/seja-uma-agencia-shopee.html" target="_blank" rel="noopener">Shopee: Seja uma Agência</a> e <a href="https://help.shopee.com.br" target="_blank" rel="noopener">Central de Ajuda da Shopee</a></li>
+    <li><a href="https://envios.mercadolivre.com.br/agencias-mercado-livre" target="_blank" rel="noopener">Mercado Livre: Agências</a></li>
+    <li><a href="https://www.sebrae.com.br" target="_blank" rel="noopener">Sebrae</a> (orientação e cursos)</li>
+    <li><a href="https://www.crcsp.org.br" target="_blank" rel="noopener">CRC-SP</a> (conferir se o contador tem registro)</li>
+    <li><a href="https://www2.susep.gov.br" target="_blank" rel="noopener">SUSEP</a> (conferir se o corretor de seguros é registrado)</li>
+  </ul>
+
+  <h3>Como as plataformas escolhem os pontos</h3>
+  <ul>
+    <li>Olham a <b>região</b> (se falta ponto ali), o <b>espaço</b>, o <b>horário</b>, as <b>fotos da fachada</b> e a <b>documentação</b>.</li>
+    <li>Depois acompanham o <b>desempenho</b>: perda de pacotes, horário cumprido, pacote mais antigo primeiro.</li>
+    <li>Quem envia ou retira escolhe, em geral, o ponto <b>mais perto</b> do endereço.</li>
+    <li>A decisão é da plataforma. Ela pode recusar, mudar o valor por pacote (avisando com 30 dias) e encerrar a parceria.</li>
+  </ul>
+
+  <h3>Perguntas do Chico</h3>
+  <h3>Precisa de contador?</h3>
+  <p>Sim, para ME. Ele abre a empresa e cuida dos impostos e das notas. O Facilita SP não conclui a abertura sem contador.</p>
+  <h3>Já posso começar a reforma?</h3>
+  <p>Só o que é leve e reaproveitável, como pintura interna e prateleiras. Obras maiores e a pintura final do muro esperam a resposta da Prefeitura.</p>
+  <h3>Quando começa a dar lucro?</h3>
+  <p>Não há data garantida. Com cerca de 100 pacotes por dia, a simulação cobre os custos em maio de 2027 e o investimento volta em março de 2028 (mínimo) ou março de 2030 (confortável). Os números usam comissão e imposto hipotéticos; não incluem materiais, retirada, pró-labore ou funcionário. Tudo depende da aprovação e do volume.</p>
+  <h3>E o protocolo antigo de 23/10/2026?</h3>
+  <p>Foi cancelado, porque não dá para seguir sem contador. Será aberto de novo pelo contador.</p>
+
+  <h3>Palavras difíceis</h3>
+  <ul>
+    <li><b>CNPJ:</b> o "CPF" da empresa.</li>
+    <li><b>ME (SLU):</b> empresa pequena com um só dono. Exige contador.</li>
+    <li><b>MEI:</b> forma mais simples de empresa, com limite de faturamento. Não será usada.</li>
+    <li><b>Simples Nacional:</b> regime de impostos simplificado, com uma guia única.</li>
+    <li><b>Alvará:</b> permissão da Prefeitura para funcionar no endereço.</li>
+    <li><b>CNAE:</b> código que diz qual é a atividade da empresa.</li>
+    <li><b>NF-e e NFS-e:</b> nota fiscal de produto e de serviço.</li>
+    <li><b>CLCB e AVCB:</b> certificados do Corpo de Bombeiros.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <p>Este guia é um material de planejamento, com valores de referência e hipóteses. Não substitui o contador, o corretor de seguros nem a orientação da Prefeitura e do Corpo de Bombeiros. Confirme valores e regras antes de qualquer gasto.</p>
+</footer>
+
+<script>
+(function(){
+  var botoes = document.querySelectorAll('#abas button');
+  var paineis = document.querySelectorAll('.painel');
+  function mostrar(id){
+    for (var i = 0; i < botoes.length; i++) botoes[i].className = botoes[i].getAttribute('data-aba') === id ? 'ativa' : '';
+    for (var j = 0; j < paineis.length; j++) paineis[j].className = paineis[j].id === 'p-' + id ? 'painel ativo' : 'painel';
+    window.scrollTo(0, 0);
+  }
+  for (var k = 0; k < botoes.length; k++) {
+    botoes[k].addEventListener('click', function(){ mostrar(this.getAttribute('data-aba')); });
+  }
+
+  /*MODELO_INICIO*/
+  function modelo(p){
+    var dias = 26;
+    var recPac = p.pacotesDia * dias * p.tarifa;
+    var aliquota = Math.min(100, Math.max(0, p.imposto)) / 100;
+    var impPac = recPac * aliquota;
+    var contrib = recPac - impPac;
+    var resultado = contrib - p.fixos;
+    var fat = recPac;
+    var rampa = [0.4, 0.7, 1];
+    var acum = -p.investimento, equilibrio = null, retorno = null;
+    for (var m = 1; m <= 60; m++) {
+      var f = m <= 3 ? rampa[m - 1] : 1;
+      var r = contrib * f - p.fixos;
+      if (equilibrio === null && r >= 0) equilibrio = m;
+      acum += r;
+      if (retorno === null && acum >= 0) retorno = m;
+    }
+    var denomPac = dias * p.tarifa * (1 - aliquota);
+    return {
+      resultado: resultado,
+      fatAnual: fat * 12,
+      equilibrio: equilibrio,
+      retorno: retorno,
+      pacNecessarios: denomPac > 0 ? p.fixos / denomPac : null
+    };
+  }
+  var MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  function mesLabel(n){
+    if (n === null) return 'não recupera em 5 anos';
+    var idx = 3 + (n - 1);
+    return MESES[idx % 12] + '/' + (2027 + Math.floor(idx / 12)) + ' (' + n + 'º mês)';
+  }
+  /*MODELO_FIM*/
+
+  var CEN = {
+    p40: {pac: 40, tar: 0.65},
+    p60: {pac: 60, tar: 0.65},
+    p100: {pac: 100, tar: 0.65},
+    p150: {pac: 150, tar: 0.65}
+  };
+  var INV = { min: {fix: 700, inv: 8650}, conf: {fix: 950, inv: 20980} };
+
+  function el(id){ return document.getElementById(id); }
+  function brl(v){ return 'R$ ' + Math.round(v).toLocaleString('pt-BR'); }
+  function calcular(){
+    var p = {
+      pacotesDia: parseFloat(el('c-pac').value) || 0,
+      tarifa: parseFloat(el('c-tar').value) || 0,
+      imposto: parseFloat(el('c-imp').value) || 0,
+      fixos: parseFloat(el('c-fix').value) || 0,
+      investimento: parseFloat(el('c-inv').value) || 0
+    };
+    var r = modelo(p);
+    var res = el('r-res');
+    res.textContent = (r.resultado >= 0 ? '+' : '-') + brl(Math.abs(r.resultado));
+    res.className = 'n ' + (r.resultado >= 0 ? 'pos' : 'neg');
+    el('r-fat').textContent = brl(r.fatAnual);
+    el('r-eq').textContent = r.equilibrio === null ? 'não cobre' : mesLabel(r.equilibrio);
+    el('r-ret').textContent = mesLabel(r.retorno);
+    el('r-pac').textContent = r.pacNecessarios === null ? '-' : Math.round(r.pacNecessarios) + ' por dia';
+  }
+  function aplicarCen(c){
+    el('c-pac').value = c.pac; el('c-tar').value = c.tar;
+    calcular();
+  }
+  function aplicarInv(i){
+    el('c-fix').value = i.fix; el('c-inv').value = i.inv;
+    calcular();
+  }
+  var btns = document.querySelectorAll('.botoes button');
+  for (var b = 0; b < btns.length; b++) {
+    btns[b].addEventListener('click', function(){
+      var c = this.getAttribute('data-cen'), i = this.getAttribute('data-inv');
+      if (c) aplicarCen(CEN[c]);
+      if (i) aplicarInv(INV[i]);
+    });
+  }
+  var campos = ['c-pac','c-tar','c-imp','c-fix','c-inv'];
+  for (var f = 0; f < campos.length; f++) el(campos[f]).addEventListener('input', calcular);
+  calcular();
+})();
+</script>
+</body>
+</html>
